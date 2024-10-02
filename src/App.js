@@ -13,6 +13,7 @@ import AdocaoPage from './AdocaoPage'
 import GerenciarTipos from './GereTipos'
 import GerenciarUsuarios from './GereUsuario'
 import GerenciarProdutos from './GereProduto'
+import GerenciarCarrinho from './GereCarrinho'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -35,6 +36,7 @@ function App() {
         <Route path="/GereTipos" element={<GerenciarTipos />} />
         <Route path="/GereUsuario" element={<GerenciarUsuarios />} />
         <Route path="/GereProduto" element={<GerenciarProdutos />} />
+        <Route path="/GereCarrinho" element={<GerenciarCarrinho />} />
 
       </Routes>
     </Router>

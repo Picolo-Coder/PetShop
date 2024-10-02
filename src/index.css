@@ -479,6 +479,10 @@ footer{
   right: 20px;
   top: 10px;
 }
+#produtosList img{
+  position: relative;
+  left: 50px !important; 
+}
 
 @media screen and (max-width: 900px) {
   .wrapper .carousel {
