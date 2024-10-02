@@ -1,11 +1,11 @@
 // AcessoriosPage.js
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from './Imagem/logo.png';
 import { useNavigate } from 'react-router-dom';
 
 const AcessoriosPage = () => {
-    const { acessorios, setAcessorios } = useContext();
+    const [acessorios, setAcessorios] = useState([]);
     const navigate = useNavigate();
 
     const voltaHome = () => {
@@ -13,13 +13,11 @@ const AcessoriosPage = () => {
     };
 
     useEffect(() => {
-        if (acessorios.length === 0) {
-            fetch('http://localhost:8080/acessorios')
-                .then(response => response.json())
-                .then(data => setAcessorios(data))
-                .catch(error => console.error('Erro ao buscar acessórios:', error));
-        }
-    }, [acessorios, setAcessorios]);
+        fetch('http://localhost:8080/acessorios')
+            .then(response => response.json())
+            .then(data => setAcessorios(data))
+            .catch(error => console.error('Erro ao buscar acessórios:', error));
+    }, []);
 
     const handleAnchorClick = (e) => {
         e.preventDefault(); // Evita a navegação

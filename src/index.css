@@ -469,6 +469,16 @@ footer{
   position: relative;
   top: 0px;
 }
+#usuariosList .btn-info , #usuariosList .btn-danger{
+  position: relative;
+  right: 20px;
+  top: 10px;
+}
+#produtosList .btn-info , #produtosList .btn-danger{
+  position: relative;
+  right: 20px;
+  top: 10px;
+}
 
 @media screen and (max-width: 900px) {
   .wrapper .carousel {

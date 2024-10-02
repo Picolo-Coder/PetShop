@@ -10,11 +10,11 @@ import FarmacosPage from './FarmacosPage'
 import AlimentacaoPage from './AlimentacaoPage'
 import BanhoTosa from './BanhoTosa'
 import AdocaoPage from './AdocaoPage'
-import AddBanhoTosa from './AddBanhoTosa' 
-import AddDoacoes from './AddDoacoes' 
-import AddUsuario from './addUsuario' 
-import AddTipos from './AddTipos' 
-import AddProdutos from './AddProdutos' 
+import GerenciarTipos from './GereTipos'
+import GerenciarUsuarios from './GereUsuario'
+import GerenciarProdutos from './GereProduto'
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
@@ -32,11 +32,10 @@ function App() {
         <Route path="/Alimentos" element={<AlimentacaoPage />} />
         <Route path="/Banho/Tosa" element={<BanhoTosa />} />
         <Route path="/Adocao" element={<AdocaoPage />} />
-        <Route path="/AddBanhoTosa" element={<AddBanhoTosa />} />
-        <Route path="/AddDoacoes" element={<AddDoacoes />} />
-        <Route path="/AddUsuario" element={<AddUsuario />} />
-        <Route path="/AddTipos" element={<AddTipos />} />
-        <Route path="/AddProdutos" element={<AddProdutos />} />
+        <Route path="/GereTipos" element={<GerenciarTipos />} />
+        <Route path="/GereUsuario" element={<GerenciarUsuarios />} />
+        <Route path="/GereProduto" element={<GerenciarProdutos />} />
+
       </Routes>
     </Router>
   );

@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from './Imagem/logo.png';
 
 const AlimentacaoPage = () => {
-    const { alimentacoes, error } = useContext();
     const navigate = useNavigate();
 
     const voltaHome = () => {
@@ -28,9 +27,9 @@ const AlimentacaoPage = () => {
                             </form>
                             <i className="bi bi-chat-square-dots"></i>
                             <li className="nav-item dropdown">
-                            <button className="nav-link" type="button" data-bs-toggle="dropdown" id='pedra' aria-expanded="false">
-                                  Canal de <br /> Atendimento
-                              </button>
+                                <button className="nav-link" type="button" data-bs-toggle="dropdown" id='pedra' aria-expanded="false">
+                                    Canal de <br /> Atendimento
+                                </button>
                                 <ul className="dropdown-menu">
                                     <li><Link className="dropdown-item" to="#">Action</Link></li>
                                     <li><Link className="dropdown-item" to="#">Another action</Link></li>
@@ -91,24 +90,7 @@ const AlimentacaoPage = () => {
                 <p className="produtos">Alimentação</p>
             </div>
             <div className="container" id='container02'>
-                <div className="row">
-                    {error && <p>{error}</p>}
-                    {Array.isArray(alimentacoes) && alimentacoes.length > 0 ? (
-                        alimentacoes.map((alimentacao) => (
-                            <div key={alimentacao.id} className="col-md-4 mb-4">
-                                <div className="card" id='card02' style={{ width: '18rem' }}>
-                                    <img src={alimentacao.imagem} className="card-img-top" alt={alimentacao.descricao} />
-                                    <div className="card-body">
-                                        <p className="card-text">{alimentacao.descricao}</p>
-                                        <h5 className="card-title">R$ {alimentacao.preco.toFixed(2)}</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        ))
-                    ) : (
-                        <p>Nenhuma alimentação encontrada.</p>
-                    )}
-                </div>
+                
             </div>
         </div>
     );

@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logo from './Imagem/logo.png';
-import { useCamas } from './CamasContext'; // Importa o hook para o contexto de Camas
 
 const CamasPage = () => {
-    const { camas, setCamas, casinhas, setCasinhas, error, setError } = useCamas(); // Desestruturando o contexto
+    const [camas, setCamas] = useState([]);
+    const [casinhas, setCasinhas] = useState([]);
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -35,7 +36,7 @@ const CamasPage = () => {
         };
 
         fetchData();
-    }, [setCamas, setCasinhas, setError]);
+    }, []);
 
     const voltaHome = () => {
         navigate('/');
