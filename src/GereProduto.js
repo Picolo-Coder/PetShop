@@ -56,6 +56,7 @@ const GereProduto = () => {
 
     const showAddForm = () => {
         setIsEditing(false);
+        setProdutoId(null); // Certifique-se de que o ID do produto seja "null" ao adicionar um novo
         setNome('');
         setPreco('');
         setDescricao('');
@@ -86,14 +87,16 @@ const GereProduto = () => {
         }
 
         const method = produtoId ? 'PUT' : 'POST';
-        const url = produtoId ? `http://127.0.0.1:8000/produtos/${produtoId}/` : 'http://127.0.0.1:8000/produtos/';
+        const url = produtoId
+            ? `http://127.0.0.1:8000/produtos/${produtoId}/`
+            : 'http://127.0.0.1:8000/produtos/';
 
         const requestData = {
             nome,
             preco,
             descricao,
             volume,
-            id: tipoId,
+            tipo_id: tipoId, // Corrigido para usar o campo tipo_id
             imagem
         };
 
@@ -104,22 +107,22 @@ const GereProduto = () => {
             },
             body: JSON.stringify(requestData),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erro ao salvar produto: ' + response.statusText);
-            }
-            return response.json();
-        })
-        .then(() => {
-            fetchProdutos();
-            setIsEditing(false);
-            alert(produtoId ? 'Produto atualizado com sucesso!' : 'Produto criado com sucesso!');
-            setShowForm(false);
-        })
-        .catch(error => {
-            console.error('Erro ao salvar produto:', error.message);
-            alert('Erro ao salvar produto. Verifique o console para mais detalhes.');
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao salvar produto: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(() => {
+                fetchProdutos();
+                setIsEditing(false);
+                alert(produtoId ? 'Produto atualizado com sucesso!' : 'Produto criado com sucesso!');
+                setShowForm(false);
+            })
+            .catch(error => {
+                console.error('Erro ao salvar produto:', error.message);
+                alert('Erro ao salvar produto. Verifique o console para mais detalhes.');
+            });
     };
 
     const deleteProduto = (id) => {
@@ -250,7 +253,22 @@ const GereProduto = () => {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="imagem" className="form-label">Imagem</label>
+                            <label htmlFor="tipoId" className="form-label">Tipo de Produto</label>
+                            <select
+                                className="form-control"
+                                id="tipoId"
+                                value={tipoId}
+                                onChange={(e) => setTipoId(e.target.value)}
+                                required
+                            >
+                                <option value="">Selecione um tipo</option>
+                                {tipos.map(tipo => (
+                                    <option key={tipo.id} value={tipo.id}>{tipo.nome_tipo}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="imagem" className="form-label">Imagem do Produto</label>
                             <input
                                 type="file"
                                 className="form-control"
@@ -258,26 +276,8 @@ const GereProduto = () => {
                                 onChange={(e) => setImagem(e.target.files[0])}
                             />
                         </div>
-                        <div className="mb-3">
-    <label htmlFor="tipoId" className="form-label">
-        Tipo do Produto
-    </label>
-    <select
-        className="form-control" // Altere para form-control
-        id="tipoId"
-        value={tipoId}
-        onChange={(e) => setTipoId(e.target.value)}
-        required
-    >
-        <option value="">Selecione um tipo</option>
-        {tipos.map(tipo => (
-            <option key={tipo.id} value={tipo.id}>{tipo.nome_tipo}</option>
-        ))}
-    </select>
-</div>
-
-                        <button type="submit" className="btn btn-primary">
-                            {isEditing ? 'Salvar Alterações' : 'Cadastrar Produto'}
+                        <button type="submit" className="btn btn-success">
+                            {isEditing ? 'Salvar Alterações' : 'Adicionar Produto'}
                         </button>
                     </form>
                 </section>

@@ -483,6 +483,21 @@ footer{
   position: relative;
   left: 50px !important; 
 }
+#agendamentosList .btn-danger, #agendamentosList .btn-info{
+  position: relative;
+  right: 50px;
+  top: 20px;
+}
+#carrinhoList .btn-danger{
+  position: relative;
+  right: 50px;
+  top: -20px;
+}
+#carrinhoList .btn-info{
+  position: relative;
+  left: -30%;
+  top: -20px;
+}
 
 @media screen and (max-width: 900px) {
   .wrapper .carousel {

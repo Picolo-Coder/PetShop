@@ -14,6 +14,7 @@ import GerenciarTipos from './GereTipos'
 import GerenciarUsuarios from './GereUsuario'
 import GerenciarProdutos from './GereProduto'
 import GerenciarCarrinho from './GereCarrinho'
+import GerenciarBanhoTosa from './GereBanhoTosa'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -37,6 +38,7 @@ function App() {
         <Route path="/GereUsuario" element={<GerenciarUsuarios />} />
         <Route path="/GereProduto" element={<GerenciarProdutos />} />
         <Route path="/GereCarrinho" element={<GerenciarCarrinho />} />
+        <Route path="/GereBanhoTosa" element={<GerenciarBanhoTosa />} />
 
       </Routes>
     </Router>
