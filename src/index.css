@@ -476,12 +476,28 @@ footer{
 }
 #produtosList .btn-info , #produtosList .btn-danger{
   position: relative;
-  right: 20px;
-  top: 10px;
+  right: 40px;
+  top: 50px;
+}
+#produtosList .col{
+  max-height: 130px;
+}
+#produtosList .col :nth-child(3){
+  position: relative;
+  top: -15px;
+}
+#produtosList .col :nth-child(4){
+  position: relative;
+  top: -30px;
+}
+#produtosList .col :nth-child(5){
+  position: relative;
+  top: -45px;
 }
 #produtosList img{
-  position: relative;
-  left: 50px !important; 
+  position: absolute;
+  left: 440px;
+  top: 50px;
 }
 #agendamentosList .btn-danger, #agendamentosList .btn-info{
   position: relative;
