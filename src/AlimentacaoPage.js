@@ -4,18 +4,17 @@ import axios from 'axios';
 import logo from './Imagem/logo.png';
 
 const AlimentacaoPage = () => {
+    const [userName, setUserName] = useState(null);
 
-  const [userName, setUserName] = useState(null);
-
-  useEffect(() => {
-      const storedUser = localStorage.getItem('usuarioNome');
-      console.log('Nome do usuário armazenado no localStorage:', storedUser); // Para depuração
-      if (storedUser) {
-          // Divide o nome e pega apenas o primeiro nome
-          const primeiroNome = storedUser.split(' ')[0]; 
-          setUserName(primeiroNome); 
-      }
-  }, []);
+    useEffect(() => {
+        const storedUser = localStorage.getItem('usuarioNome');
+        console.log('Nome do usuário armazenado no localStorage:', storedUser); // Para depuração
+        if (storedUser) {
+            // Divide o nome e pega apenas o primeiro nome
+            const primeiroNome = storedUser.split(' ')[0]; 
+            setUserName(primeiroNome); 
+        }
+    }, []);
 
     const [alimentos, setAlimentos] = useState([]);
     const [error, setError] = useState('');
@@ -43,6 +42,21 @@ const AlimentacaoPage = () => {
 
     const voltaHome = () => {
         navigate('/');
+    };
+
+    const handleProdutoClick = (produto) => {
+        // Armazena os dados relevantes do produto no localStorage, incluindo o ID
+        const produtoDetalhes = {
+            id: produto.id, // Adiciona o ID do produto
+            nome: produto.nome,
+            preco: produto.preco,
+            descricao: produto.descricao,
+            volume: produto.volume,
+            imagem: produto.imagem,
+        };
+
+        localStorage.setItem('produtoSelecionado', JSON.stringify(produtoDetalhes));
+        navigate('/DetailProduto'); // Redireciona para a página de detalhes
     };
 
     return (
@@ -110,26 +124,26 @@ const AlimentacaoPage = () => {
                 <Link to="/Acessorios" className='acess'>Acessórios</Link>
             </div>
             <div className="menu2">
-    <Link to="/Adocao" className='dawn'>Adoções</Link>
-      <Link to="/Banho/Tosa" className='bin'>Banho e Tosa</Link>
-      <Link to="/Alimentos" className='bin'>Alimentação</Link>
-      <Link to="/Farmacos/Higiene" className='bin'>Farmácia e<br></br> Higiene</Link>
-      <button
-        className="btn"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseExample"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-      >
-        ▼
-      </button>
-      <div className="collapse" id="collapseExample">
-        <Link to="/Brinquedos" className='bin'>Brinquedos</Link>
-        <Link to="/Camas/Casinhas" className='ban'>Camas e<br></br> Casinhas</Link>
-        <Link to="/Acessorios" className='acess'>Acessórios</Link>
-      </div>
-      </div>
+                <Link to="/Adocao" className='dawn'>Adoções</Link>
+                <Link to="/Banho/Tosa" className='bin'>Banho e Tosa</Link>
+                <Link to="/Alimentos" className='bin'>Alimentação</Link>
+                <Link to="/Farmacos/Higiene" className='bin'>Farmácia e<br></br> Higiene</Link>
+                <button
+                    className="btn"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
+                    ▼
+                </button>
+                <div className="collapse" id="collapseExample">
+                    <Link to="/Brinquedos" className='bin'>Brinquedos</Link>
+                    <Link to="/Camas/Casinhas" className='ban'>Camas e<br></br> Casinhas</Link>
+                    <Link to="/Acessorios" className='acess'>Acessórios</Link>
+                </div>
+            </div>
             <div className="barra" id="barraAcess">
                 <p className="produtos">Alimentação</p>
             </div>
@@ -143,7 +157,12 @@ const AlimentacaoPage = () => {
                                 {alimentos.length > 0 ? (
                                     alimentos.map((produto) => (
                                         <div key={produto.id} className="col-md-4 mb-4">
-                                            <div className="card" id='card02' style={{ width: '18rem' }}>
+                                            <div
+                                                className="card"
+                                                id='card02'
+                                                style={{ width: '18rem' }}
+                                                onClick={() => handleProdutoClick(produto)} // Adiciona o manipulador de clique
+                                            >
                                                 <img
                                                     src={`http://127.0.0.1:8000/produtos/${produto.id}/imagem`}
                                                     className="card-img-top"

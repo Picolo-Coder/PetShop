@@ -13,8 +13,72 @@ import pet from './Imagem/pet.png';
 const BanhoTosaPage = () => {
     
   const navigate = useNavigate();
-
   const [userName, setUserName] = useState(null);
+
+  const [tipoServico, setTipoServico] = useState('');
+  const [dataReserva, setDataReserva] = useState('');
+  const [mensagemSucesso, setMensagemSucesso] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Recuperar o ID do usuário logado do localStorage
+    const usuarioId = localStorage.getItem('usuarioId'); // Supondo que o ID do usuário esteja salvo como 'usuarioId'
+
+    // Verificar se o usuário está logado
+    if (!usuarioId) {
+      alert('Você precisa estar logado para cadastrar um serviço.');
+      return;
+    }
+
+    // Montar os dados para envio
+    const servicoData = {
+      usuario_id: usuarioId,
+      tipo_servico: tipoServico,
+      data_reserva: dataReserva,
+    };
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/banho-tosa/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(servicoData),
+      });
+
+      if (response.ok) {
+        setMensagemSucesso({
+          tipoServico: tipoServico,
+          dataReserva: dataReserva,
+        });
+        // Limpar campos após o envio
+        setTipoServico('');
+        setDataReserva('');
+      } else {
+        alert('Erro ao cadastrar serviço. Tente novamente.');
+      }
+    } catch (error) {
+      console.error('Erro ao cadastrar serviço:', error);
+      alert('Erro ao cadastrar serviço. Verifique a conexão com o servidor.');
+    }
+  };
+
+  useEffect(() => {
+    if (mensagemSucesso) {
+      const handleClickOutside = () => {
+        setMensagemSucesso(null); // Remove a mensagem de sucesso
+      };
+
+      // Adiciona o evento de clique ao documento
+      document.addEventListener('click', handleClickOutside);
+
+      // Remove o evento quando a mensagem desaparecer
+      return () => {
+        document.removeEventListener('click', handleClickOutside);
+      };
+    }
+  }, [mensagemSucesso]);
 
   useEffect(() => {
       const storedUser = localStorage.getItem('usuarioNome');
@@ -127,39 +191,60 @@ const BanhoTosaPage = () => {
       <p class="produtos">Banho e Tosa</p>
     </div>
 
-    <form id='frontTosa'>
+    <article className='F1'>
+    <form id='frontTosa' onSubmit={handleSubmit}>
       <div className='mb-3'>
-        <label htmlFor="dataReserva" className="form-label">Procedimento:</label>
+        <label htmlFor="tipoServico" className="form-label">Procedimento:</label>
         <select
-            className="form-control"
-            id="tipoServico"
+          className="form-control"
+          id="tipoServico"
+          value={tipoServico}
+          onChange={(e) => setTipoServico(e.target.value)}
+          required
         >
-            <option value="">Selecione um tipo de serviço</option>
-            <option value="banho">Banho</option>
-            <option value="tosa">Tosa</option>
-            <option value="banho_tosa">Banho e Tosa</option>
+          <option value="">Selecione um tipo de serviço</option>
+          <option value="banho">Banho</option>
+          <option value="tosa">Tosa</option>
+          <option value="banho_tosa">Banho e Tosa</option>
         </select>
       </div>
       <div className='mb-3' id='mb-2'>
-      <label htmlFor="dataReserva" className="form-label">Data:</label>
-      <input
+        <label htmlFor="dataReserva" className="form-label">Data:</label>
+        <input
           type="date"
           className="form-control"
           id="dataReserva"
-      />
+          value={dataReserva}
+          onChange={(e) => setDataReserva(e.target.value)}
+          required
+        />
       </div>
-    </form>
-    <aside className='TosaSide'>
-    <img src={pet} alt='Imagem de contraste pet'></img>
-    </aside>
-    <div className='lig'>
+      <div className='lig'>
       <button type="submit">
         <span className="material-symbols-outlined">pets</span><br />
         <p>Agendar</p>
       </button>
-    </div>                       
+    </div>  
+    </form>
+
+    {mensagemSucesso && (
+        <div className="mensagem-sucesso">
+          <p className='aviso'>  
+            Seu agendamento foi realizado com sucesso! <br></br>
+            Entraremos em contato para informar os horários disponíveis.
+          </p>
+          <p className='aviso2'>Informações do Procedimento</p>
+          <p><b>Serviço agendado:</b> {mensagemSucesso.tipoServico}</p>
+          <p><b>Data do agendamento:</b> {mensagemSucesso.dataReserva}</p>
+        </div>
+      )}
+    </article>
+
+    <aside className='TosaSide'>
+    <img src={pet} alt='Imagem de contraste pet'></img>
+    </aside>                     
     
-    <footer>
+    <footer className='foo1'>
       <img src={Wave} alt='Dino'></img>
       <div className="pegaTudo">
         <div className="info">

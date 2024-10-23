@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from './Imagem/logo.png';
 import { useNavigate } from 'react-router-dom';
+import Wave from './Imagem/wave.svg';
+import Dog from './Imagem/dog.svg';
 
 const DetailsDoacao = () => {
     const [doacao, setDoacao] = useState(null); // Estado para armazenar a doação
-
     const [userName, setUserName] = useState(null);
+
+    useEffect(() => {
+      // Rola para o topo da página quando o componente for montado
+      window.scrollTo(0, 0);
+    }, []);
 
     useEffect(() => {
         const storedUser = localStorage.getItem('usuarioNome');
@@ -121,7 +127,7 @@ const DetailsDoacao = () => {
     </div>
 
             {doacao ? (
-                <div className='d-flex' id='detailSection'>
+                <div id='detailSection'>
                     <figure>
                         <img
                         src={`http://127.0.0.1:8000/doacoes/${doacao.id}/imagem?${new Date().getTime()}`}
@@ -144,6 +150,47 @@ const DetailsDoacao = () => {
             ) : (
                 <p>Carregando detalhes da doação...</p>
             )}
+
+<footer id='foDoa'>
+      <img src={Wave} alt='Dino'></img>
+      <div className="pegaTudo">
+        <div className="info">
+          <b>Little <span>Animals</span></b>
+          <img src={Dog} alt='Dino'></img>
+          <p>
+            Little Animals é uma rede criada para <br />
+            estreitar laços entres pessoas que têm o <br />
+            sonho de cuidar bem do seu pet ou adotar <br />
+            seu amiginho. Vamos juntos incentivar a <br />
+            adoção, conscientizar sobre a posse responsável <br />
+            e fomentar a cultura de cuidados e bem-estar <br />
+            animal.
+          </p>
+          <div className="incones">
+            <i className="bi bi-facebook"></i>
+            <i className="bi bi-instagram"></i>
+          </div>
+        </div>
+        <div className="conjunto">
+          <div className="info2">
+            <p className="import">Institucional</p>
+            <a href="#">Sobre a Little Animals</a><br />
+            <a href="#">Os pets nas lojas</a><br />
+            <a href="#">Transparência com você</a><br />
+            <a href="#">Histórico de impacto</a><br />
+            <a href="#">Projetos sociais</a><br />
+            <a href="#">Unidades</a><br />
+            <a href="#">FAQ</a>
+          </div>
+          <div className="info3">
+            <p className="import">Como Ajudar?</p>
+            <a href="#">Quero adotar</a><br />
+            <a href="#">Quero doar</a><br />
+            <a href="#">ONGs/Protetores</a><br />
+          </div>
+        </div>
+      </div>
+    </footer>
         </div>
     );
 };

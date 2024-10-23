@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from './Imagem/logo.png';
 import Banner4 from './Imagem/Quatro.png';
 import axios from 'axios';
+import Wave from './Imagem/wave.svg';
+import Dog from './Imagem/dog.svg';
 
 const AdocaoPage = () => {
     const [doacoes, setDoacoes] = useState([]); // Estado para armazenar as doações
@@ -17,6 +19,7 @@ const AdocaoPage = () => {
             setUserName(primeiroNome); 
         }
     }, []);
+
 
     // Função para buscar as doações da API
     const fetchDoacoes = async () => {
@@ -162,6 +165,47 @@ const AdocaoPage = () => {
                     <p>Carregando doações...</p>
                 )}
             </div>
+
+    <footer>
+      <img src={Wave} alt='Dino'></img>
+      <div className="pegaTudo">
+        <div className="info">
+          <b>Little <span>Animals</span></b>
+          <img src={Dog} alt='Dino'></img>
+          <p>
+            Little Animals é uma rede criada para <br />
+            estreitar laços entres pessoas que têm o <br />
+            sonho de cuidar bem do seu pet ou adotar <br />
+            seu amiginho. Vamos juntos incentivar a <br />
+            adoção, conscientizar sobre a posse responsável <br />
+            e fomentar a cultura de cuidados e bem-estar <br />
+            animal.
+          </p>
+          <div className="incones">
+            <i className="bi bi-facebook"></i>
+            <i className="bi bi-instagram"></i>
+          </div>
+        </div>
+        <div className="conjunto">
+          <div className="info2">
+            <p className="import">Institucional</p>
+            <a href="#">Sobre a Little Animals</a><br />
+            <a href="#">Os pets nas lojas</a><br />
+            <a href="#">Transparência com você</a><br />
+            <a href="#">Histórico de impacto</a><br />
+            <a href="#">Projetos sociais</a><br />
+            <a href="#">Unidades</a><br />
+            <a href="#">FAQ</a>
+          </div>
+          <div className="info3">
+            <p className="import">Como Ajudar?</p>
+            <a href="#">Quero adotar</a><br />
+            <a href="#">Quero doar</a><br />
+            <a href="#">ONGs/Protetores</a><br />
+          </div>
+        </div>
+      </div>
+    </footer>
         </div>
     );
 };

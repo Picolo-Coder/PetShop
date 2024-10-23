@@ -7,24 +7,20 @@ const FarmacosPage = () => {
     const [farmacos, setFarmacos] = useState([]);
     const [error, setError] = useState('');
     const navigate = useNavigate();
-
     const [userName, setUserName] = useState(null);
 
-  useEffect(() => {
-      const storedUser = localStorage.getItem('usuarioNome');
-      console.log('Nome do usuário armazenado no localStorage:', storedUser); // Para depuração
-      if (storedUser) {
-          // Divide o nome e pega apenas o primeiro nome
-          const primeiroNome = storedUser.split(' ')[0]; 
-          setUserName(primeiroNome); 
-      }
-  }, []);
+    useEffect(() => {
+        const storedUser = localStorage.getItem('usuarioNome');
+        if (storedUser) {
+            const primeiroNome = storedUser.split(' ')[0]; 
+            setUserName(primeiroNome); 
+        }
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/produtos'); // URL dos produtos
-                // Filtrar produtos apenas com tipo_id 2 e 4
+                const response = await axios.get('http://127.0.0.1:8000/produtos');
                 const filteredProducts = response.data.filter(produto => produto.tipo_id === 2 || produto.tipo_id === 4);
                 
                 if (Array.isArray(filteredProducts)) {
@@ -43,6 +39,23 @@ const FarmacosPage = () => {
 
     const voltaHome = () => {
         navigate('/');
+    };
+
+    const handleProductClick = (produto) => {
+        const produtoDetalhes = {
+            id: produto.id,
+            nome: produto.nome,
+            preco: produto.preco,
+            descricao: produto.descricao,
+            volume: produto.volume,
+            imagem: produto.imagem,
+        };
+    
+        // Atualiza o localStorage com os dados do produto selecionado
+        localStorage.setItem('produtoSelecionado', JSON.stringify(produtoDetalhes));
+    
+        // Navegue para a página de detalhes do produto
+        navigate('/DetailProduto', { state: { produto: produtoDetalhes } });
     };
 
     return (
@@ -110,26 +123,26 @@ const FarmacosPage = () => {
                 <Link to="/Acessorios" className='acess'>Acessórios</Link>
             </div>
             <div className="menu2">
-    <Link to="/Adocao" className='dawn'>Adoções</Link>
-      <Link to="/Banho/Tosa" className='bin'>Banho e Tosa</Link>
-      <Link to="/Alimentos" className='bin'>Alimentação</Link>
-      <Link to="/Farmacos/Higiene" className='bin'>Farmácia e<br></br> Higiene</Link>
-      <button
-        className="btn"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseExample"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-      >
-        ▼
-      </button>
-      <div className="collapse" id="collapseExample">
-        <Link to="/Brinquedos" className='bin'>Brinquedos</Link>
-        <Link to="/Camas/Casinhas" className='ban'>Camas e<br></br> Casinhas</Link>
-        <Link to="/Acessorios" className='acess'>Acessórios</Link>
-      </div>
-      </div>
+                <Link to="/Adocao" className='dawn'>Adoções</Link>
+                <Link to="/Banho/Tosa" className='bin'>Banho e Tosa</Link>
+                <Link to="/Alimentos" className='bin'>Alimentação</Link>
+                <Link to="/Farmacos/Higiene" className='bin'>Farmácia e<br /> Higiene</Link>
+                <button
+                    className="btn"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
+                    ▼
+                </button>
+                <div className="collapse" id="collapseExample">
+                    <Link to="/Brinquedos" className='bin'>Brinquedos</Link>
+                    <Link to="/Camas/Casinhas" className='ban'>Camas e<br /> Casinhas</Link>
+                    <Link to="/Acessorios" className='acess'>Acessórios</Link>
+                </div>
+            </div>
             <div className="barra" id="barraAcess">
                 <p className="produtos">Farmácias</p>
             </div>
@@ -139,7 +152,7 @@ const FarmacosPage = () => {
                     <div className="d-flex flex-wrap">
                         {farmacos.length > 0 ? (
                             farmacos.map((produto) => (
-                                <div key={produto.id} className="col-md-4 mb-4">
+                                <div key={produto.id} className="col-md-4 mb-4" onClick={() => handleProductClick(produto)}>
                                     <div className="card" id='card02' style={{ width: '18rem' }}>
                                         <img
                                             src={`http://127.0.0.1:8000/produtos/${produto.id}/imagem`} // URL para a imagem do produto

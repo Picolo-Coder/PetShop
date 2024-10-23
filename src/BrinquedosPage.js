@@ -1,5 +1,3 @@
-// src/BrinquedosPage.js
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from './Imagem/logo.png';
@@ -11,15 +9,14 @@ const BrinquedosPage = () => {
 
     const [userName, setUserName] = useState(null);
 
-  useEffect(() => {
-      const storedUser = localStorage.getItem('usuarioNome');
-      console.log('Nome do usuário armazenado no localStorage:', storedUser); // Para depuração
-      if (storedUser) {
-          // Divide o nome e pega apenas o primeiro nome
-          const primeiroNome = storedUser.split(' ')[0]; 
-          setUserName(primeiroNome); 
-      }
-  }, []);
+    useEffect(() => {
+        const storedUser = localStorage.getItem('usuarioNome');
+        console.log('Nome do usuário armazenado no localStorage:', storedUser); // Para depuração
+        if (storedUser) {
+            const primeiroNome = storedUser.split(' ')[0]; 
+            setUserName(primeiroNome); 
+        }
+    }, []);
 
     const voltaHome = () => {
         navigate('/');
@@ -29,12 +26,29 @@ const BrinquedosPage = () => {
         fetch('http://127.0.0.1:8000/produtos/')
             .then(response => response.json())
             .then(data => {
-                // Filtra os produtos para incluir apenas aqueles do tipo Brinquedos (id 5)
                 const brinquedosFiltrados = data.filter(produto => produto.tipo_id === 5);
                 setBrinquedos(brinquedosFiltrados);
             })
             .catch(error => console.error('Erro ao buscar brinquedos:', error));
     }, []);
+
+    // Função para salvar os detalhes do brinquedo no localStorage
+    const handleBrinquedoClick = (brinquedo) => {
+        const brinquedoDetalhes = {
+            id: brinquedo.id,
+            nome: brinquedo.nome,
+            preco: brinquedo.preco,
+            descricao: brinquedo.descricao,
+            volume: brinquedo.volume,
+            imagem: brinquedo.imagem,
+        };
+
+        // Atualiza o localStorage com os dados do brinquedo selecionado
+        localStorage.setItem('produtoSelecionado', JSON.stringify(brinquedoDetalhes));
+
+        // Navega para a página de detalhes do brinquedo
+        navigate('/DetailProduto', { state: { brinquedo: brinquedoDetalhes } });
+    };
 
     const handleAnchorClick = (e) => {
         e.preventDefault(); // Evita a navegação
@@ -82,8 +96,8 @@ const BrinquedosPage = () => {
                                     </Link>
                                 )}
                             </li>
-                            <li className="nav-item">
-                                <button className="nav-link btn" id="car" aria-current="page">Carrinho</button>
+                            <li class="nav-item">
+                                <a class="nav-link" id="car" aria-current="page" href="#">Carrinho</a>
                             </li>
                             <i className="bi bi-cart3">
                                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill">
@@ -104,27 +118,6 @@ const BrinquedosPage = () => {
                 <Link to="/Camas/Casinhas" className="acess">Camas e<br /> Casinhas</Link>
                 <Link to="/Acessorios" className="acess">Acessórios</Link>
             </div>
-            <div className="menu2">
-    <Link to="/Adocao" className='dawn'>Adoções</Link>
-      <Link to="/Banho/Tosa" className='bin'>Banho e Tosa</Link>
-      <Link to="/Alimentos" className='bin'>Alimentação</Link>
-      <Link to="/Farmacos/Higiene" className='bin'>Farmácia e<br></br> Higiene</Link>
-      <button
-        className="btn"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseExample"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-      >
-        ▼
-      </button>
-      <div className="collapse" id="collapseExample">
-        <Link to="/Brinquedos" className='bin'>Brinquedos</Link>
-        <Link to="/Camas/Casinhas" className='ban'>Camas e<br></br> Casinhas</Link>
-        <Link to="/Acessorios" className='acess'>Acessórios</Link>
-      </div>
-      </div>
             <div className="barra" id="barraBrinquedos">
                 <p className="produtos">Brinquedos</p>
             </div>
@@ -135,14 +128,14 @@ const BrinquedosPage = () => {
                             {Array.isArray(brinquedos) && brinquedos.length > 0 ? (
                                 brinquedos.map((brinquedo) => (
                                     <div key={brinquedo.id} className="col-md-4 mb-4">
-                                        <div className="card" id='card02' style={{ width: '18rem' }}>
+                                        <div className="card" id='card02' style={{ width: '18rem' }} onClick={() => handleBrinquedoClick(brinquedo)}>
                                             <img 
-                                                src={`http://127.0.0.1:8000/produtos/${brinquedo.id}/imagem`} // URL da imagem do brinquedo
+                                                src={`http://127.0.0.1:8000/produtos/${brinquedo.id}/imagem`} 
                                                 className="card-img-top"
-                                                alt={brinquedo.nome} // Nome do produto como alt
+                                                alt={brinquedo.nome} 
                                                 onError={(e) => {
-                                                    e.target.onerror = null; // Previne loop em caso de erro
-                                                    e.target.src = 'placeholder-image-url'; // URL do placeholder
+                                                    e.target.onerror = null; 
+                                                    e.target.src = 'placeholder-image-url'; 
                                                 }}
                                             />
                                             <div className="card-body">

@@ -4,24 +4,40 @@ import axios from 'axios';
 import logo from './Imagem/logo.png';
 
 const CamasPage = () => {
-    const [produtos, setProdutos] = useState([]); // Renomear para produtos
+    const [produtos, setProdutos] = useState([]); // Renomeado para produtos
     const [error, setError] = useState('');
     const navigate = useNavigate();
-
     const [userName, setUserName] = useState(null);
 
-  useEffect(() => {
-      const storedUser = localStorage.getItem('usuarioNome');
-      console.log('Nome do usuário armazenado no localStorage:', storedUser); // Para depuração
-      if (storedUser) {
-          // Divide o nome e pega apenas o primeiro nome
-          const primeiroNome = storedUser.split(' ')[0]; 
-          setUserName(primeiroNome); 
-      }
-  }, []);
-
+    // Obtém o nome do usuário do localStorage
     useEffect(() => {
+        const storedUser = localStorage.getItem('usuarioNome');
+        if (storedUser) {
+            const primeiroNome = storedUser.split(' ')[0];
+            setUserName(primeiroNome);
+        }
+    }, []);
 
+    // Função para tratar o clique no produto e redirecionar para a página de detalhes
+    const handleProdutoClick = (produto) => {
+        const produtoDetalhes = {
+            id: produto.id,
+            nome: produto.nome,
+            preco: produto.preco,
+            descricao: produto.descricao,
+            volume: produto.volume,
+            imagem: produto.imagem,
+        };
+
+        // Atualiza o localStorage com os dados do produto selecionado
+        localStorage.setItem('produtoSelecionado', JSON.stringify(produtoDetalhes));
+
+        // Navega para a página de detalhes do produto
+        navigate('/DetailProduto', { state: { produto: produtoDetalhes } });
+    };
+
+    // Fetch dos produtos (camas e casinhas) na montagem do componente
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/produtos/');
@@ -43,6 +59,7 @@ const CamasPage = () => {
         fetchData();
     }, []);
 
+    // Função para voltar à página inicial
     const voltaHome = () => {
         navigate('/');
     };
@@ -102,6 +119,7 @@ const CamasPage = () => {
                     </div>
                 </div>
             </nav>
+
             <div className="menu">
                 <Link to="/Adocao" className='bin'>Adoções</Link>
                 <Link to="/Banho/Tosa" className='bin'>Banho e Tosa</Link>
@@ -111,30 +129,33 @@ const CamasPage = () => {
                 <Link to="/Camas/Casinhas" className='acess'>Camas e<br /> Casinhas</Link>
                 <Link to="/Acessorios" className='acess'>Acessórios</Link>
             </div>
+
             <div className="menu2">
-    <Link to="/Adocao" className='dawn'>Adoções</Link>
-      <Link to="/Banho/Tosa" className='bin'>Banho e Tosa</Link>
-      <Link to="/Alimentos" className='bin'>Alimentação</Link>
-      <Link to="/Farmacos/Higiene" className='bin'>Farmácia e<br></br> Higiene</Link>
-      <button
-        className="btn"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseExample"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-      >
-        ▼
-      </button>
-      <div className="collapse" id="collapseExample">
-        <Link to="/Brinquedos" className='bin'>Brinquedos</Link>
-        <Link to="/Camas/Casinhas" className='ban'>Camas e<br></br> Casinhas</Link>
-        <Link to="/Acessorios" className='acess'>Acessórios</Link>
-      </div>
-      </div>
+                <Link to="/Adocao" className='dawn'>Adoções</Link>
+                <Link to="/Banho/Tosa" className='bin'>Banho e Tosa</Link>
+                <Link to="/Alimentos" className='bin'>Alimentação</Link>
+                <Link to="/Farmacos/Higiene" className='bin'>Farmácia e<br></br> Higiene</Link>
+                <button
+                    className="btn"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
+                    ▼
+                </button>
+                <div className="collapse" id="collapseExample">
+                    <Link to="/Brinquedos" className='bin'>Brinquedos</Link>
+                    <Link to="/Camas/Casinhas" className='ban'>Camas e<br></br> Casinhas</Link>
+                    <Link to="/Acessorios" className='acess'>Acessórios</Link>
+                </div>
+            </div>
+
             <div className="barra" id="barraAcess">
                 <p className="produtos">Camas e Casinhas</p>
             </div>
+
             <div className="container" id='container02'>
                 <div className="row">
                     {error && <p>{error}</p>}
@@ -145,7 +166,7 @@ const CamasPage = () => {
                                 {produtos.length > 0 ? (
                                     produtos.map((produto) => (
                                         <div key={produto.id} className="col-md-4 mb-4">
-                                            <div className="card" id='card02' style={{ width: '18rem' }}>
+                                            <div className="card" id='card02' style={{ width: '18rem' }} onClick={() => handleProdutoClick(produto)}>
                                                 <img
                                                     src={`http://127.0.0.1:8000/produtos/${produto.id}/imagem`}
                                                     className="card-img-top"

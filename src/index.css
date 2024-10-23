@@ -498,6 +498,181 @@ footer{
   position: relative;
   left: 12px;
 }
+.container02{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.container02 img{
+  width: 300px;
+  height: 300px;
+  margin-top: 20px;
+}
+#frontTosa{
+  margin-bottom: 30px;
+}
+#frontTosa label{
+  position: relative;
+  left: 15px;
+}
+#frontTosa input, #frontTosa select{
+  background-color: #F0F5F5;
+}
+#frontTosa .mb-3{
+  position: relative;
+  left: 20px;
+  margin-top: 30px;
+  height: 40px;
+}
+#mb-2{
+  position: relative;
+  top: 30px;
+}
+#frontTosa .mb-3 label{
+  font-size: 18px;
+  position: relative;
+  top: 10px;
+}
+.lig{
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  left: 38%;
+  top: 191%;
+}
+.lig button{
+  background-color: #6a6d7800;
+  border: none;
+  z-index: 1000;
+}
+.lig button span{
+  font-size: 55px;
+  color:#F58433;
+}
+.lig button p{
+  color:#F58433;
+  font-size: 18px;
+}
+.TosaSide{
+  position: absolute;
+  top: 183%;
+  left: 15%;
+}
+.TosaSide img{
+  width: 390px;
+  height: 390px;
+}
+.foo1{
+  margin-top: 450px;
+}
+#tipoServico option{
+  font-size: 12px;
+}
+.mensagem-sucesso {
+  position: absolute; /* Fixar a mensagem no topo da tela */
+  top: 157%;
+  left: 0;
+  right: 0;
+  margin: 0; /* Remover as margens */
+  padding: 20px;
+  color: black;
+  background-color: #ffffff;
+  z-index: 1000;
+}
+.mensagem-sucesso .aviso{
+  font-size: 17px;
+}
+.mensagem-sucesso .aviso2{
+  color: #F58433;
+  font-size: 20px;
+}
+#detailSection{
+  width: 75%;
+  margin-left: 12.5%;
+  height: 450px;
+  margin-top: 10px;
+}
+#detailSection figure{
+  margin-top: 35px;
+  background-image: url("Imagem/fundo02.png");
+  background-size: cover;
+  border-radius: 8px;
+  margin-left: -10px;
+}
+#detailSection figure img{
+  width: 350px !important;
+  height: 350px !important;
+}
+#detailSection .title-doacao{
+  color: #F58433;
+}
+#detailSection .infoSection{
+  margin-top: 20px;
+}
+.infoSection .desc{
+  width: 330px;
+  margin-top: 15px;
+}
+.infoSection li{
+  margin-left: 15px;
+}
+.infoSection .ctt{
+  width: 300px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 8px;
+  height: 33px;
+  background-color: #F58433;
+  color: white;
+  margin-bottom: 20px;
+}
+.infoProduts{
+  width: 100%;
+  height: auto;
+}
+.infoProduts figure{
+  width: 280px ;
+  height: 215px ;
+  margin-top: 15px; 
+  display: flex;
+  justify-content: center;
+}
+.infoProduts img{
+  max-width: 100%;
+  max-height: 100%;
+  margin-left: 100px;
+}
+.information h1{
+  color: rgb(79, 118, 234);
+  font-size: 23px;
+  text-align: center;
+}
+.information p{
+  color: #F58433;
+  font-size: 22px;
+  text-align: center;
+  margin-top: 5px;
+}
+.information li{
+  width: 340px;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+.information :nth-child(4){
+  margin-bottom: 15px;
+}
+.infoProduts .ctt{
+  width: 350px;
+  background-color: #F58433;
+  border: none;
+  border-radius: 8px;
+  height: 35px;
+  margin:10px;
+  margin-bottom: 15px;
+}
+#foDoa{
+  margin-top: 390px;
+}
 
 @media screen and (max-width: 900px) {
   .wrapper .carousel {
@@ -838,6 +1013,7 @@ nav figure img{
     margin-left: 12.5%;
     height: 450px;
     margin-top: 10px;
+    display: flex;
   }
   #detailSection figure{
     margin-top: 35px;
@@ -881,7 +1057,11 @@ nav figure img{
   }
   .container02 img{
     width: 400px;
+    height: 400px;
     margin: 20px;
+  }
+  .F1{
+    display: flex;
   }
   #frontTosa{
     padding: 90px;
@@ -910,7 +1090,7 @@ nav figure img{
   .TosaSide{
     position: absolute;
     left: 61%;
-    top: 106%;
+    top: 104%;
   }
   .TosaSide img{
     width: 500px;
@@ -934,6 +1114,65 @@ nav figure img{
   .lig button p{
     color:#F58433;
     font-size: 18px;
+  }
+  #tipoServico option{
+    font-size: 17px;
+  }
+  .foo1{
+    margin-top: 40px;
+  }
+  .mensagem-sucesso {
+    background-color: rgba(245, 222, 179, 0);
+    padding: 20px;
+    top: 110px;
+    left: 50px;
+    text-align: left;
+    position: relative; 
+  }
+  .mensagem-sucesso .aviso2{
+    font-size: 20px;
+  }
+  .infoProduts{
+    display: flex;
+    justify-content: center;
+  }
+  .infoProduts h1{
+    font-size: 32px;
+    text-align: left;
+  }
+  .infoProduts p{
+    margin-top: 20px;
+    text-align: left;
+    margin-left: 10px;
+  }
+  .infoProduts figure{
+    margin-top: 10px;
+    height: 300px;
+    width: 300px;
+    position: relative;
+    left: -60px;
+  }
+  .infoProduts img{
+    position: relative;
+    top: 90px;
+  }
+  .information{
+    margin-top: 70px;
+    margin-left: 90px;
+  }
+  .infoProduts .ctt{
+    width: 355px;
+    background-color: #F58433;
+    border: none;
+    border-radius: 8px;
+    height: 30px;
+    margin-top: 10px;
+  }
+  #BarraProd{
+    margin-top: 50px;
+  }
+  #foDoa{
+    margin-top: -15px;
   }
 }
 #card02 {

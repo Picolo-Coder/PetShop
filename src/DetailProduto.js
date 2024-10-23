@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from './Imagem/logo.png';
-// Importando imagens
-import banner1 from './Imagem/Um.png';
 import Dino from './Imagem/dinoverde.png';
 import Wave from './Imagem/wave.svg';
 import Dog from './Imagem/dog.svg';
@@ -10,19 +8,15 @@ import Chapeu from './Imagem/g_chapeuzinho vermeho.png';
 import Rapunzel from './Imagem/r_cachorro_rapunzel.png';
 import Miranha from './Imagem/r_homem_aranha.png';
 import Pokemon from './Imagem/pikathu-Photoroom.png';
-import { useNavigate } from 'react-router-dom';
 
-const HomePage = () => {
+const DetailProduto = () => {
+    const [produto, setProduto] = useState(null); // Estado para armazenar o produto
     const [userName, setUserName] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('usuarioNome');
-        console.log('Nome do usuário armazenado no localStorage:', storedUser); // Para depuração
-        if (storedUser) {
-            // Divide o nome e pega apenas o primeiro nome
-            const primeiroNome = storedUser.split(' ')[0]; 
-            setUserName(primeiroNome); 
-        }
+      // Rola para o topo da página quando o componente for montado
+      window.scrollTo(0, 0);
     }, []);
 
     useEffect(() => {
@@ -116,9 +110,35 @@ const HomePage = () => {
         };
     }, []); 
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        const storedUser = localStorage.getItem('usuarioNome');
+        if (storedUser) {
+            const primeiroNome = storedUser.split(' ')[0]; 
+            setUserName(primeiroNome); 
+        }
+
+        const produtoSelecionado = localStorage.getItem('produtoSelecionado');
+        if (produtoSelecionado) {
+            setProduto(JSON.parse(produtoSelecionado)); // Armazena o produto selecionado no estado
+        }
+    }, []);
+
+    // Recupera o produto selecionado do localStorage
+    const produtoSelecionado = JSON.parse(localStorage.getItem('produtoSelecionado'));
+
+    if (!produtoSelecionado) {
+        return <p>Nenhum produto selecionado.</p>;
+    }
+
+    // Pega o ID do produto selecionado
+    const produtoId = produtoSelecionado.id;
+
     const voltaHome = () => {
         navigate('/');
+    };
+
+    const handleContact = () => {
+        window.location.href = "https://api.whatsapp.com/send/?phone=5518997249438&text=Pedro%20Otavio%20-%20Funcion%C3%A1rio%20Pet%20Innovation&type=phone_number&app_absent=0";
     };
 
     return (
@@ -163,57 +183,75 @@ const HomePage = () => {
                                     </Link>
                                 )}
                             </li>
-              <li class="nav-item">
-                <Link to="/DadosCarrinho" className='nav-link' id='rota'>Carrinho</Link>
-              </li>
-              <i class="bi bi-cart3">
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill">
-                0
-                <span class="visually-hidden">unread messages</span>
-              </span>
-              </i>
-            </ul>
-          </div>
-        </div>
-    </nav>
-    <div className="menu">
-    <Link to="/Adocao" className='bin'>Adoções</Link>
-      <Link to="/Banho/Tosa" className='bin'>Banho e Tosa</Link>
-      <Link to="/Alimentos" className='bin'>Alimentação</Link>
-      <Link to="/Farmacos/Higiene" className='bin'>Farmácia e Higiene</Link>
-      <Link to="/Brinquedos" className='bin'>Brinquedos</Link>
-      <Link to="/Camas/Casinhas" className='acess'>Camas e<br></br> Casinhas</Link>
-      <Link to="/Acessorios" className='acess'>Acessórios</Link>
-    </div>
-    <div className="menu2">
-    <Link to="/Adocao" className='dawn'>Adoções</Link>
-      <Link to="/Banho/Tosa" className='bin'>Banho e Tosa</Link>
-      <Link to="/Alimentos" className='bin'>Alimentação</Link>
-      <Link to="/Farmacos/Higiene" className='bin'>Farmácia e<br></br> Higiene</Link>
-      <button
-        className="btn"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseExample"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-      >
-        ▼
-      </button>
-      <div className="collapse" id="collapseExample">
-        <Link to="/Brinquedos" className='bin'>Brinquedos</Link>
-        <Link to="/Camas/Casinhas" className='ban'>Camas e<br></br> Casinhas</Link>
-        <Link to="/Acessorios" className='acess'>Acessórios</Link>
-      </div>
-    </div>
-    <div class="container">
-    <img src={banner1} alt="Banner de produtos" />
+                            <li className="nav-item">
+                                <a className="nav-link" id="car" aria-current="page" href="#">Carrinho</a>
+                            </li>
+                            <i className="bi bi-cart3">
+                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill">
+                                    0
+                                    <span className="visually-hidden">unread messages</span>
+                                </span>
+                            </i>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div className="menu">
+                <Link to="/Adocao" className='bin'>Adoções</Link>
+                <Link to="/Banho/Tosa" className='bin'>Banho e Tosa</Link>
+                <Link to="/Alimentos" className='bin'>Alimentação</Link>
+                <Link to="/Farmacos/Higiene" className='bin'>Farmácia e Higiene</Link>
+                <Link to="/Brinquedos" className='bin'>Brinquedos</Link>
+                <Link to="/Camas/Casinhas" className='acess'>Camas e<br /> Casinhas</Link>
+                <Link to="/Acessorios" className='acess'>Acessórios</Link>
+            </div>
+            <div className="menu2">
+                <Link to="/Adocao" className='dawn'>Adoções</Link>
+                <Link to="/Banho/Tosa" className='bin'>Banho e Tosa</Link>
+                <Link to="/Alimentos" className='bin'>Alimentação</Link>
+                <Link to="/Farmacos/Higiene" className='bin'>Farmácia e<br /> Higiene</Link>
+                <button
+                    className="btn"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
+                    ▼
+                </button>
+                <div className="collapse" id="collapseExample">
+                    <Link to="/Brinquedos" className='bin'>Brinquedos</Link>
+                    <Link to="/Camas/Casinhas" className='ban'>Camas e<br /> Casinhas</Link>
+                    <Link to="/Acessorios" className='acess'>Acessórios</Link>
+                </div>
+            </div>
+
+            {produto ? (
+                <div className='infoProduts'>
+                    <figure>
+                        <img
+                        src={`http://127.0.0.1:8000/produtos/${produtoId}/imagem?${new Date().getTime()}`}
+                        alt={produtoSelecionado.nome}
+                        />
+                    </figure>
+                    <div className='information'>
+                        <h1>{produtoSelecionado.nome}</h1>
+                        <p>R$ {produtoSelecionado.preco.toFixed(2)}</p>
+                        <li>{produtoSelecionado.volume}</li>
+                        <li>{produtoSelecionado.descricao}</li>
+                        <button className='ctt'  >Adcionar ao carrinho <i class="bi bi-cart2"></i></button>
+                    </div>
+                </div>
+            ) : (
+                <p>Carregando detalhes do produto...</p>
+            )}
+
+<div class="barra" id='BarraProd'>
+      <p class="produtos">Mais produtos</p>
     </div>
 
-    <div class="barra">
-      <p class="produtos">Produtos em destaque</p>
-    </div>
-    <div className="wrapper">
+<div className="wrapper">
       <i id="left" className="fa-solid fa-angle-left"></i>
       <ul className="carousel">
         <li className="card">
@@ -259,6 +297,7 @@ const HomePage = () => {
       </ul>
       <i id="right" className="fa-solid fa-angle-right"></i>
     </div>  
+
     <footer>
       <img src={Wave} alt='Dino'></img>
       <div className="pegaTudo">
@@ -299,8 +338,8 @@ const HomePage = () => {
         </div>
       </div>
     </footer>
-    </div>
-  );
-}
+        </div>
+    );
+};
 
-export default HomePage;
+export default DetailProduto;

@@ -18,9 +18,11 @@ import GerenciarBanhoTosa from './GereBanhoTosa'
 import GerenciarDoacao from './GereDoacao'
 import Dados from './MeuPerfil'
 import DadosDoacao from './DetailDoacao'
+import DadosProduto from './DetailProduto'
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import DadosCarrinho from './DadosCarrinho';
 
 function App() {
   return (
@@ -44,8 +46,8 @@ function App() {
         <Route path="/GereBanhoTosa" element={<GerenciarBanhoTosa />} />
         <Route path="/MeuPerfil" element={<Dados />} />
         <Route path="/DetailDoacao" element={<DadosDoacao />} />
-      
-
+        <Route path="/DetailProduto" element={<DadosProduto />} />
+        <Route path="/DadosCarrinho" element={<DadosCarrinho />} />
       </Routes>
     </Router>
   );
